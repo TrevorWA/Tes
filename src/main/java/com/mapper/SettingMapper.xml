@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.SettingMapper" >
+  <resultMap id="BaseResultMap" type="com.pojo.Setting" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="smart" property="smart" jdbcType="INTEGER" />
+    <result column="water" property="water" jdbcType="REAL" />
+    <result column="food" property="food" jdbcType="REAL" />
+    <result column="o2" property="o2" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, smart, water, food, o2
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.SettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from setting
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from setting
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.pojo.SettingExample" >
+    delete from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.pojo.Setting" >
+    insert into setting (id, smart, water, 
+      food, o2)
+    values (#{id,jdbcType=INTEGER}, #{smart,jdbcType=INTEGER}, #{water,jdbcType=REAL}, 
+      #{food,jdbcType=REAL}, #{o2,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.pojo.Setting" >
+    insert into setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="smart != null" >
+        smart,
+      </if>
+      <if test="water != null" >
+        water,
+      </if>
+      <if test="food != null" >
+        food,
+      </if>
+      <if test="o2 != null" >
+        o2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="smart != null" >
+        #{smart,jdbcType=INTEGER},
+      </if>
+      <if test="water != null" >
+        #{water,jdbcType=REAL},
+      </if>
+      <if test="food != null" >
+        #{food,jdbcType=REAL},
+      </if>
+      <if test="o2 != null" >
+        #{o2,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.pojo.SettingExample" resultType="java.lang.Integer" >
+    select count(*) from setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update setting
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.smart != null" >
+        smart = #{record.smart,jdbcType=INTEGER},
+      </if>
+      <if test="record.water != null" >
+        water = #{record.water,jdbcType=REAL},
+      </if>
+      <if test="record.food != null" >
+        food = #{record.food,jdbcType=REAL},
+      </if>
+      <if test="record.o2 != null" >
+        o2 = #{record.o2,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update setting
+    set id = #{record.id,jdbcType=INTEGER},
+      smart = #{record.smart,jdbcType=INTEGER},
+      water = #{record.water,jdbcType=REAL},
+      food = #{record.food,jdbcType=REAL},
+      o2 = #{record.o2,jdbcType=REAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.pojo.Setting" >
+    update setting
+    <set >
+      <if test="smart != null" >
+        smart = #{smart,jdbcType=INTEGER},
+      </if>
+      <if test="water != null" >
+        water = #{water,jdbcType=REAL},
+      </if>
+      <if test="food != null" >
+        food = #{food,jdbcType=REAL},
+      </if>
+      <if test="o2 != null" >
+        o2 = #{o2,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.pojo.Setting" >
+    update setting
+    set smart = #{smart,jdbcType=INTEGER},
+      water = #{water,jdbcType=REAL},
+      food = #{food,jdbcType=REAL},
+      o2 = #{o2,jdbcType=REAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
