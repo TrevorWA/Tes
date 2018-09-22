@@ -36,14 +36,7 @@ public class TestServer implements Filter{
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
 		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-		
 		NioSocketAcceptor acceptor = null;
         try {
             acceptor = new NioSocketAcceptor();
@@ -55,6 +48,13 @@ public class TestServer implements Filter{
         } catch (Exception e) {
             e.printStackTrace();
         }
+		
+	}
+
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		// TODO Auto-generated method stub
 		
 	}
 

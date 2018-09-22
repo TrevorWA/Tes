@@ -8,7 +8,7 @@
 </head>
 <body>
 maven ssm project<br>
-<a href="getLogin">Account </a>
+<a href="getSettingAll">Account </a>
 <a href="updataLogin">updata </a>
 </body>
 </html>

@@ -44,6 +44,13 @@ import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 
 public class TestRxtx implements SerialPortEventListener {
+	
+	String light_control="";
+    String water_control="";
+    String addo2_control="";
+    String heating_control="";
+
+	
 	// 检测系统中可用的通讯端口类
 	private CommPortIdentifier portId;
 	// 枚举类型
@@ -123,6 +130,7 @@ public class TestRxtx implements SerialPortEventListener {
 			break;
 		case SerialPortEvent.DATA_AVAILABLE: // 有数据到达
 			readComm();
+			ErrorControl();
 			break;
 		default:
 			break;
@@ -304,7 +312,6 @@ public class TestRxtx implements SerialPortEventListener {
 		String info = "";
 		String msg = "071800F100A001"+com;// 要发送的命令
 		info = "02" + msg + checkcode(msg);
-		System.out.println("info=" + info + "  字符串：" + hexStr2Bytes(com));
 
 		try {
 			outputStream.write(hexStr2Bytes(info));
@@ -342,6 +349,67 @@ public class TestRxtx implements SerialPortEventListener {
 
 		}
 	}
+	
+	public void ErrorControl() {
+		
+		String control="";
+		control=dataAll.get("00 A0 01");
+		
+		String x=hexString2binaryString(control);
+
+        light_control=x.substring(4,5);
+        water_control=x.substring(5,6);
+        addo2_control=x.substring(6,7);
+        heating_control=x.substring(7,8);
+        
+        if(dataAll.get("EE 61 01").equals("01")&&water_control.equals("1")) {
+			sendMsg("0"+binaryString2hexString(light_control+"0"+addo2_control+heating_control));
+		}else if(dataAll.get("EE 61 01").equals("00")&&water_control.equals("0")) {
+			sendMsg("0"+binaryString2hexString(light_control+"1"+addo2_control+heating_control));
+		}
+        
+        String[] handler = dataAll.get("47 8C 01").split(" ");
+        String t = handler[1] + handler[0];
+        float wendu=(float) (Integer.parseInt(t,16)/100.00);
+		
+		if(wendu>26&&heating_control.equals("1")) {
+			sendMsg("0"+binaryString2hexString(light_control+water_control+addo2_control+"0"));
+		}else if(wendu<26&&heating_control.equals("0")) {
+			sendMsg("0"+binaryString2hexString(light_control+water_control+addo2_control+"1"));
+		}
+		
+	}
+	
+	public static String hexString2binaryString(String hexString)
+    {
+        if (hexString == null || hexString.length() % 2 != 0)
+            return null;
+        String bString = "", tmp;
+        for (int i = 0; i < hexString.length(); i++)
+        {
+            tmp = "0000" + Integer.toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
+            bString += tmp.substring(tmp.length() - 4);
+        }
+        return bString;
+    }
+	
+	public static String binaryString2hexString(String bString)
+    {
+        if (bString == null || bString.equals("") || bString.length() % 4!= 0)
+            return null;
+        StringBuffer tmp = new StringBuffer();
+        int iTmp = 0;
+        for (int i = 0; i < bString.length(); i += 4)
+        {
+            iTmp = 0;
+            for (int j = 0; j < 4; j++)
+            {
+                iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);
+            }
+            tmp.append(Integer.toHexString(iTmp));
+        }
+        return tmp.toString();
+    }
 
 	/*@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
