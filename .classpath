@@ -34,5 +34,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/RXTXcomm.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mina-core-2.0.16.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/slf4j-api-1.7.21.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/json-20180813.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

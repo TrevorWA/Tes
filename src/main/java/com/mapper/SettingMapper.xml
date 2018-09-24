@@ -4,9 +4,9 @@
   <resultMap id="BaseResultMap" type="com.pojo.Setting" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="smart" property="smart" jdbcType="INTEGER" />
-    <result column="water" property="water" jdbcType="REAL" />
-    <result column="food" property="food" jdbcType="REAL" />
-    <result column="o2" property="o2" jdbcType="REAL" />
+    <result column="water" property="water" jdbcType="INTEGER" />
+    <result column="wendu" property="wendu" jdbcType="INTEGER" />
+    <result column="o2" property="o2" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, smart, water, food, o2
+    id, smart, water, wendu, o2
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.pojo.SettingExample" >
     select
@@ -101,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="com.pojo.Setting" >
     insert into setting (id, smart, water, 
-      food, o2)
-    values (#{id,jdbcType=INTEGER}, #{smart,jdbcType=INTEGER}, #{water,jdbcType=REAL}, 
-      #{food,jdbcType=REAL}, #{o2,jdbcType=REAL})
+      wendu, o2)
+    values (#{id,jdbcType=INTEGER}, #{smart,jdbcType=INTEGER}, #{water,jdbcType=INTEGER}, 
+      #{wendu,jdbcType=INTEGER}, #{o2,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.pojo.Setting" >
     insert into setting
@@ -117,8 +117,8 @@
       <if test="water != null" >
         water,
       </if>
-      <if test="food != null" >
-        food,
+      <if test="wendu != null" >
+        wendu,
       </if>
       <if test="o2 != null" >
         o2,
@@ -132,13 +132,13 @@
         #{smart,jdbcType=INTEGER},
       </if>
       <if test="water != null" >
-        #{water,jdbcType=REAL},
+        #{water,jdbcType=INTEGER},
       </if>
-      <if test="food != null" >
-        #{food,jdbcType=REAL},
+      <if test="wendu != null" >
+        #{wendu,jdbcType=INTEGER},
       </if>
       <if test="o2 != null" >
-        #{o2,jdbcType=REAL},
+        #{o2,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -158,13 +158,13 @@
         smart = #{record.smart,jdbcType=INTEGER},
       </if>
       <if test="record.water != null" >
-        water = #{record.water,jdbcType=REAL},
+        water = #{record.water,jdbcType=INTEGER},
       </if>
-      <if test="record.food != null" >
-        food = #{record.food,jdbcType=REAL},
+      <if test="record.wendu != null" >
+        wendu = #{record.wendu,jdbcType=INTEGER},
       </if>
       <if test="record.o2 != null" >
-        o2 = #{record.o2,jdbcType=REAL},
+        o2 = #{record.o2,jdbcType=INTEGER},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -175,9 +175,9 @@
     update setting
     set id = #{record.id,jdbcType=INTEGER},
       smart = #{record.smart,jdbcType=INTEGER},
-      water = #{record.water,jdbcType=REAL},
-      food = #{record.food,jdbcType=REAL},
-      o2 = #{record.o2,jdbcType=REAL}
+      water = #{record.water,jdbcType=INTEGER},
+      wendu = #{record.wendu,jdbcType=INTEGER},
+      o2 = #{record.o2,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -189,13 +189,13 @@
         smart = #{smart,jdbcType=INTEGER},
       </if>
       <if test="water != null" >
-        water = #{water,jdbcType=REAL},
+        water = #{water,jdbcType=INTEGER},
       </if>
-      <if test="food != null" >
-        food = #{food,jdbcType=REAL},
+      <if test="wendu != null" >
+        wendu = #{wendu,jdbcType=INTEGER},
       </if>
       <if test="o2 != null" >
-        o2 = #{o2,jdbcType=REAL},
+        o2 = #{o2,jdbcType=INTEGER},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -203,9 +203,9 @@
   <update id="updateByPrimaryKey" parameterType="com.pojo.Setting" >
     update setting
     set smart = #{smart,jdbcType=INTEGER},
-      water = #{water,jdbcType=REAL},
-      food = #{food,jdbcType=REAL},
-      o2 = #{o2,jdbcType=REAL}
+      water = #{water,jdbcType=INTEGER},
+      wendu = #{wendu,jdbcType=INTEGER},
+      o2 = #{o2,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

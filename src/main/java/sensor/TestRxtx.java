@@ -44,13 +44,15 @@ import gnu.io.SerialPortEventListener;
 import gnu.io.UnsupportedCommOperationException;
 
 public class TestRxtx implements SerialPortEventListener {
-	
-	String light_control="";
-    String water_control="";
-    String addo2_control="";
-    String heating_control="";
 
-	
+	String light_control = "";
+	String water_control = "";
+	String addo2_control = "";
+	String heating_control = "";
+
+	private int Swendu = 26;
+	private int Smart = 0;
+
 	// 检测系统中可用的通讯端口类
 	private CommPortIdentifier portId;
 	// 枚举类型
@@ -64,11 +66,11 @@ public class TestRxtx implements SerialPortEventListener {
 	private OutputStream outputStream;
 
 	private NioSocketAcceptor acceptor = null;
-	
+
 	// 地址
-	public  Map<String, String> dataAll = new HashMap<String, String>();
-	
-	public String xxx=new String("000");
+	public Map<String, String> dataAll = new HashMap<String, String>();
+
+	public String xxx = new String("000");
 
 	// 初始化串口
 	@SuppressWarnings("unchecked")
@@ -130,11 +132,21 @@ public class TestRxtx implements SerialPortEventListener {
 			break;
 		case SerialPortEvent.DATA_AVAILABLE: // 有数据到达
 			readComm();
+
 			ErrorControl();
+
 			break;
 		default:
 			break;
 		}
+	}
+
+	public int getSmart() {
+		return Smart;
+	}
+
+	public void setSmart(int smart) {
+		Smart = smart;
 	}
 
 	// 读取串口返回信息
@@ -156,14 +168,14 @@ public class TestRxtx implements SerialPortEventListener {
 					// s传感器短地址，t传感器获取数据
 					String s = handler[5] + " " + handler[6] + " " + handler[7];
 					String t = handler[8];
-					System.out.println("网络地址：" + s + " 值：" + t);
+					// System.out.println("网络地址：" + s + " 值：" + t);
 					dataAll.put(s, t);
 				} else if (x == 11) {
 					String s = handler[5] + " " + handler[6] + " " + handler[7];
 					String t = handler[8] + " " + handler[9];
 					// System.err.println(s);
 					// System.err.println(t);
-					System.out.println("网络地址：" + s + " 值：" + t);
+					// System.out.println("网络地址：" + s + " 值：" + t);
 					dataAll.put(s, t);
 				}
 
@@ -172,7 +184,7 @@ public class TestRxtx implements SerialPortEventListener {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	// 关闭串口
@@ -310,7 +322,7 @@ public class TestRxtx implements SerialPortEventListener {
 	public void sendMsg(String com) {
 
 		String info = "";
-		String msg = "071800F100A001"+com;// 要发送的命令
+		String msg = "071800F100A001" + com;// 要发送的命令
 		info = "02" + msg + checkcode(msg);
 
 		try {
@@ -323,12 +335,25 @@ public class TestRxtx implements SerialPortEventListener {
 		}
 	}
 
+	public void sendO2Msg(String o2) {
+		System.out.println("o2:" + o2);
+		System.out.println("0" + binaryString2hexString(light_control + water_control + o2 + heating_control));
+		sendMsg("0" + binaryString2hexString(light_control + water_control + o2 + heating_control));
+		addo2_control=o2;
+	}
+
+	public void sendWaterMsg(String water) {
+		System.out.println("water:" + water);
+		System.out.println("0" + binaryString2hexString(light_control + water + addo2_control + heating_control));
+		sendMsg("0" + binaryString2hexString(light_control + water + addo2_control + heating_control));
+		water_control=water;
+	}
+
 	class MaplayoutThread extends Thread {
 		@Override
 		public void run() {
-			
-	        // 2.从容器中获取mapper
-			
+
+			// 2.从容器中获取mapper
 
 			while (true) {
 				try {
@@ -349,99 +374,101 @@ public class TestRxtx implements SerialPortEventListener {
 
 		}
 	}
-	
+
 	public void ErrorControl() {
-		
-		String control="";
-		control=dataAll.get("00 A0 01");
-		
-		String x=hexString2binaryString(control);
 
-        light_control=x.substring(4,5);
-        water_control=x.substring(5,6);
-        addo2_control=x.substring(6,7);
-        heating_control=x.substring(7,8);
-        
-        if(dataAll.get("EE 61 01").equals("01")&&water_control.equals("1")) {
-			sendMsg("0"+binaryString2hexString(light_control+"0"+addo2_control+heating_control));
-		}else if(dataAll.get("EE 61 01").equals("00")&&water_control.equals("0")) {
-			sendMsg("0"+binaryString2hexString(light_control+"1"+addo2_control+heating_control));
+		String control = "";
+		control = dataAll.get("00 A0 01");
+
+		String x = hexString2binaryString(control);
+
+		light_control = x.substring(4, 5);
+		water_control = x.substring(5, 6);
+		addo2_control = x.substring(6, 7);
+		heating_control = x.substring(7, 8);
+		if (Smart == 1) {
+			if (dataAll.get("EE 61 01").equals("01") && water_control.equals("1")) {
+				sendMsg("0" + binaryString2hexString(light_control + "0" + addo2_control + heating_control));
+			}
+			/*
+			 * else if (dataAll.get("EE 61 01").equals("00") && water_control.equals("0")) {
+			 * sendMsg("0" + binaryString2hexString(light_control + "1" + addo2_control +
+			 * heating_control)); }
+			 */
+
+			String[] handler = dataAll.get("47 8C 01").split(" ");
+			String t = handler[1] + handler[0];
+			float wendu = (float) (Integer.parseInt(t, 16) / 100.00);
+
+			if (wendu > Swendu && heating_control.equals("1")) {
+				sendMsg("0" + binaryString2hexString(light_control + water_control + addo2_control + "0"));
+			} else if (wendu < Swendu && heating_control.equals("0")) {
+				sendMsg("0" + binaryString2hexString(light_control + water_control + addo2_control + "1"));
+			}
 		}
-        
-        String[] handler = dataAll.get("47 8C 01").split(" ");
-        String t = handler[1] + handler[0];
-        float wendu=(float) (Integer.parseInt(t,16)/100.00);
-		
-		if(wendu>26&&heating_control.equals("1")) {
-			sendMsg("0"+binaryString2hexString(light_control+water_control+addo2_control+"0"));
-		}else if(wendu<26&&heating_control.equals("0")) {
-			sendMsg("0"+binaryString2hexString(light_control+water_control+addo2_control+"1"));
+	}
+
+	public int getSwendu() {
+		return Swendu;
+	}
+
+	public void setSwendu(int swendu) {
+		Swendu = swendu;
+	}
+
+	public static String hexString2binaryString(String hexString) {
+		if (hexString == null || hexString.length() % 2 != 0)
+			return null;
+		String bString = "", tmp;
+		for (int i = 0; i < hexString.length(); i++) {
+			tmp = "0000" + Integer.toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
+			bString += tmp.substring(tmp.length() - 4);
 		}
-		
-	}
-	
-	public static String hexString2binaryString(String hexString)
-    {
-        if (hexString == null || hexString.length() % 2 != 0)
-            return null;
-        String bString = "", tmp;
-        for (int i = 0; i < hexString.length(); i++)
-        {
-            tmp = "0000" + Integer.toBinaryString(Integer.parseInt(hexString.substring(i, i + 1), 16));
-            bString += tmp.substring(tmp.length() - 4);
-        }
-        return bString;
-    }
-	
-	public static String binaryString2hexString(String bString)
-    {
-        if (bString == null || bString.equals("") || bString.length() % 4!= 0)
-            return null;
-        StringBuffer tmp = new StringBuffer();
-        int iTmp = 0;
-        for (int i = 0; i < bString.length(); i += 4)
-        {
-            iTmp = 0;
-            for (int j = 0; j < 4; j++)
-            {
-                iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);
-            }
-            tmp.append(Integer.toHexString(iTmp));
-        }
-        return tmp.toString();
-    }
-
-	/*@Override
-	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
-
+		return bString;
 	}
 
-	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
-		TestRxtx testRxtx = new TestRxtx();
-
-		TestRxtx sp = new TestRxtx();
-
-		sp.init();
-
-		// sp.sendMsg();;
-
-		MaplayoutThread map1 = testRxtx.new MaplayoutThread();
-		map1.start();
-
-		// System.out.println("输出" + sp.test);
-		// sp.closeSerialPort();
-
+	public static String binaryString2hexString(String bString) {
+		if (bString == null || bString.equals("") || bString.length() % 4 != 0)
+			return null;
+		StringBuffer tmp = new StringBuffer();
+		int iTmp = 0;
+		for (int i = 0; i < bString.length(); i += 4) {
+			iTmp = 0;
+			for (int j = 0; j < 4; j++) {
+				iTmp += Integer.parseInt(bString.substring(i + j, i + j + 1)) << (4 - j - 1);
+			}
+			tmp.append(Integer.toHexString(iTmp));
+		}
+		return tmp.toString();
 	}
 
-	@Override
-	public void destroy() {
-		// TODO Auto-generated method stub
-
-	}*/
+	/*
+	 * @Override public void init(FilterConfig filterConfig) throws ServletException
+	 * { // TODO Auto-generated method stub
+	 * 
+	 * }
+	 * 
+	 * @Override public void doFilter(ServletRequest request, ServletResponse
+	 * response, FilterChain chain) throws IOException, ServletException { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * TestRxtx testRxtx = new TestRxtx();
+	 * 
+	 * TestRxtx sp = new TestRxtx();
+	 * 
+	 * sp.init();
+	 * 
+	 * // sp.sendMsg();;
+	 * 
+	 * MaplayoutThread map1 = testRxtx.new MaplayoutThread(); map1.start();
+	 * 
+	 * // System.out.println("输出" + sp.test); // sp.closeSerialPort();
+	 * 
+	 * }
+	 * 
+	 * @Override public void destroy() { // TODO Auto-generated method stub
+	 * 
+	 * }
+	 */
 
 }

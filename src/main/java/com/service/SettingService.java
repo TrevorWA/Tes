@@ -11,5 +11,5 @@ public interface SettingService {
 
 	public List<Setting> getSettingAll();
 
-	public void updataSetting(int id,int smart,float water,float food,float o2);
+	public void updataSetting(int id,int smart,int water,int wendu,int o2);
 }

@@ -234,113 +234,113 @@ public class SettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andWaterEqualTo(Float value) {
+        public Criteria andWaterEqualTo(Integer value) {
             addCriterion("water =", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterNotEqualTo(Float value) {
+        public Criteria andWaterNotEqualTo(Integer value) {
             addCriterion("water <>", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterGreaterThan(Float value) {
+        public Criteria andWaterGreaterThan(Integer value) {
             addCriterion("water >", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterGreaterThanOrEqualTo(Float value) {
+        public Criteria andWaterGreaterThanOrEqualTo(Integer value) {
             addCriterion("water >=", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterLessThan(Float value) {
+        public Criteria andWaterLessThan(Integer value) {
             addCriterion("water <", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterLessThanOrEqualTo(Float value) {
+        public Criteria andWaterLessThanOrEqualTo(Integer value) {
             addCriterion("water <=", value, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterIn(List<Float> values) {
+        public Criteria andWaterIn(List<Integer> values) {
             addCriterion("water in", values, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterNotIn(List<Float> values) {
+        public Criteria andWaterNotIn(List<Integer> values) {
             addCriterion("water not in", values, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterBetween(Float value1, Float value2) {
+        public Criteria andWaterBetween(Integer value1, Integer value2) {
             addCriterion("water between", value1, value2, "water");
             return (Criteria) this;
         }
 
-        public Criteria andWaterNotBetween(Float value1, Float value2) {
+        public Criteria andWaterNotBetween(Integer value1, Integer value2) {
             addCriterion("water not between", value1, value2, "water");
             return (Criteria) this;
         }
 
-        public Criteria andFoodIsNull() {
-            addCriterion("food is null");
+        public Criteria andWenduIsNull() {
+            addCriterion("wendu is null");
             return (Criteria) this;
         }
 
-        public Criteria andFoodIsNotNull() {
-            addCriterion("food is not null");
+        public Criteria andWenduIsNotNull() {
+            addCriterion("wendu is not null");
             return (Criteria) this;
         }
 
-        public Criteria andFoodEqualTo(Float value) {
-            addCriterion("food =", value, "food");
+        public Criteria andWenduEqualTo(Integer value) {
+            addCriterion("wendu =", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodNotEqualTo(Float value) {
-            addCriterion("food <>", value, "food");
+        public Criteria andWenduNotEqualTo(Integer value) {
+            addCriterion("wendu <>", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodGreaterThan(Float value) {
-            addCriterion("food >", value, "food");
+        public Criteria andWenduGreaterThan(Integer value) {
+            addCriterion("wendu >", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodGreaterThanOrEqualTo(Float value) {
-            addCriterion("food >=", value, "food");
+        public Criteria andWenduGreaterThanOrEqualTo(Integer value) {
+            addCriterion("wendu >=", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodLessThan(Float value) {
-            addCriterion("food <", value, "food");
+        public Criteria andWenduLessThan(Integer value) {
+            addCriterion("wendu <", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodLessThanOrEqualTo(Float value) {
-            addCriterion("food <=", value, "food");
+        public Criteria andWenduLessThanOrEqualTo(Integer value) {
+            addCriterion("wendu <=", value, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodIn(List<Float> values) {
-            addCriterion("food in", values, "food");
+        public Criteria andWenduIn(List<Integer> values) {
+            addCriterion("wendu in", values, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodNotIn(List<Float> values) {
-            addCriterion("food not in", values, "food");
+        public Criteria andWenduNotIn(List<Integer> values) {
+            addCriterion("wendu not in", values, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodBetween(Float value1, Float value2) {
-            addCriterion("food between", value1, value2, "food");
+        public Criteria andWenduBetween(Integer value1, Integer value2) {
+            addCriterion("wendu between", value1, value2, "wendu");
             return (Criteria) this;
         }
 
-        public Criteria andFoodNotBetween(Float value1, Float value2) {
-            addCriterion("food not between", value1, value2, "food");
+        public Criteria andWenduNotBetween(Integer value1, Integer value2) {
+            addCriterion("wendu not between", value1, value2, "wendu");
             return (Criteria) this;
         }
 
@@ -354,52 +354,52 @@ public class SettingExample {
             return (Criteria) this;
         }
 
-        public Criteria andO2EqualTo(Float value) {
+        public Criteria andO2EqualTo(Integer value) {
             addCriterion("o2 =", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2NotEqualTo(Float value) {
+        public Criteria andO2NotEqualTo(Integer value) {
             addCriterion("o2 <>", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2GreaterThan(Float value) {
+        public Criteria andO2GreaterThan(Integer value) {
             addCriterion("o2 >", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2GreaterThanOrEqualTo(Float value) {
+        public Criteria andO2GreaterThanOrEqualTo(Integer value) {
             addCriterion("o2 >=", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2LessThan(Float value) {
+        public Criteria andO2LessThan(Integer value) {
             addCriterion("o2 <", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2LessThanOrEqualTo(Float value) {
+        public Criteria andO2LessThanOrEqualTo(Integer value) {
             addCriterion("o2 <=", value, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2In(List<Float> values) {
+        public Criteria andO2In(List<Integer> values) {
             addCriterion("o2 in", values, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2NotIn(List<Float> values) {
+        public Criteria andO2NotIn(List<Integer> values) {
             addCriterion("o2 not in", values, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2Between(Float value1, Float value2) {
+        public Criteria andO2Between(Integer value1, Integer value2) {
             addCriterion("o2 between", value1, value2, "o2");
             return (Criteria) this;
         }
 
-        public Criteria andO2NotBetween(Float value1, Float value2) {
+        public Criteria andO2NotBetween(Integer value1, Integer value2) {
             addCriterion("o2 not between", value1, value2, "o2");
             return (Criteria) this;
         }

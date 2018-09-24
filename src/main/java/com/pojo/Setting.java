@@ -5,11 +5,11 @@ public class Setting {
 
     private Integer smart;
 
-    private Float water;
+    private Integer water;
 
-    private Float food;
+    private Integer wendu;
 
-    private Float o2;
+    private Integer o2;
 
     public Integer getId() {
         return id;
@@ -27,27 +27,27 @@ public class Setting {
         this.smart = smart;
     }
 
-    public Float getWater() {
+    public Integer getWater() {
         return water;
     }
 
-    public void setWater(Float water) {
+    public void setWater(Integer water) {
         this.water = water;
     }
 
-    public Float getFood() {
-        return food;
+    public Integer getWendu() {
+        return wendu;
     }
 
-    public void setFood(Float food) {
-        this.food = food;
+    public void setWendu(Integer wendu) {
+        this.wendu = wendu;
     }
 
-    public Float getO2() {
+    public Integer getO2() {
         return o2;
     }
 
-    public void setO2(Float o2) {
+    public void setO2(Integer o2) {
         this.o2 = o2;
     }
 }

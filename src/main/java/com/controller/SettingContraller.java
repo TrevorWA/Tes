@@ -4,7 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pojo.Setting;
@@ -20,8 +22,12 @@ public class SettingContraller {
 
 	@RequestMapping("updataSetting")
 	@ResponseBody
-	public void updataLogin(int id, int smart, float water, float food, float o2) {
-		SettingServiceImpl.updataSetting(id, smart, water, food, o2);
+	public void updataLogin(@RequestParam("id") int id, 
+			@RequestParam("smart") int smart, 
+			@RequestParam("water") int water,
+			@RequestParam("wendu") int wendu,
+			@RequestParam("o2") int o2) {
+		SettingServiceImpl.updataSetting(id,smart,water,wendu,o2);
 	}
 
 	@RequestMapping("getSettingAll")

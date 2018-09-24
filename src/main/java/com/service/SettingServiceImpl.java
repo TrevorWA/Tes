@@ -38,9 +38,17 @@ public class SettingServiceImpl implements SettingService {
 	}
 
 	@Override
-	public void updataSetting(int id, int smart, float water, float food, float o2) {
+	public void updataSetting(int id, int smart, int water, int wendu, int o2) {
 		// TODO Auto-generated method stub
 		
+		Setting set=new Setting();
+		set.setId(id);
+		set.setSmart(smart);
+		set.setWater(water);
+		set.setWendu(wendu);
+		set.setO2(o2);
+		
+		accountMapper.updateByPrimaryKey(set);
 	}
 
 }
